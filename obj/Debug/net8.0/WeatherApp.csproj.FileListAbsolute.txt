@@ -31,3 +31,4 @@ C:\Users\kiddd\WeatherApp\obj\Debug\net8.0\refint\WeatherApp.dll
 C:\Users\kiddd\WeatherApp\obj\Debug\net8.0\WeatherApp.pdb
 C:\Users\kiddd\WeatherApp\obj\Debug\net8.0\WeatherApp.genruntimeconfig.cache
 C:\Users\kiddd\WeatherApp\obj\Debug\net8.0\ref\WeatherApp.dll
+C:\Users\kiddd\WeatherApp\obj\Debug\net8.0\WeatherApp.sourcelink.json
