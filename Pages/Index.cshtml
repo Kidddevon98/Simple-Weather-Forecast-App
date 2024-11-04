@@ -4,18 +4,19 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="container">
-    <h1>Weather Forecast</h1>
-    <form method="post" asp-page-handler="Search">
-        <input type="text" name="city" placeholder="Enter city name" required />
-        <button type="submit">Get Weather</button>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Weather Forecast</h1>
+    <form method="post" asp-page-handler="Search" class="form-inline justify-content-center">
+        <input type="text" name="city" class="form-control mr-2" placeholder="Enter city name" required />
+        <button type="submit" class="btn btn-primary">Get Weather</button>
     </form>
 
     @if (!string.IsNullOrEmpty(Model.WeatherData))
     {
-        <div id="weatherResult" class="mt-3">
+        <div id="weatherResult" class="mt-4 p-3 bg-light border rounded">
             <h3>Weather Data:</h3>
             <pre>@Model.WeatherData</pre>
         </div>
     }
 </div>
+
