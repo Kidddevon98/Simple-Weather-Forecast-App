@@ -1,0 +1,18 @@
+using System.Net.Http;
+using System.Threading.Tasks;
+using WeatherApp.Services;
+using Xunit;
+
+public class WeatherServiceTests
+{
+    [Fact]
+    public async Task GetWeatherAsync_ValidCity_ReturnsData()
+    {
+        var httpClient = new HttpClient();
+        var weatherService = new WeatherService(httpClient, null);
+        var result = await weatherService.GetWeatherAsync("New York");
+
+        Assert.NotNull(result);
+        Assert.True(result.ContainsKey("main"));
+    }
+}
