@@ -4,16 +4,22 @@
     ViewData["Title"] = "Weather Forecast";
 }
 
+<!-- Add Bootstrap CDN in the head -->
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
 <div class="container my-5">
     <div class="text-center mb-4">
         <h1>@ViewData["Title"]</h1>
         <p class="lead">Get detailed and real-time weather updates for your city.</p>
     </div>
+
     <form method="post" asp-page-handler="Search" class="form-inline justify-content-center mb-4">
         <div class="input-group">
             <input type="text" name="city" class="form-control" placeholder="Enter city name" required />
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Get Weather</button>
+                <button class="btn btn-primary" type="submit">Get Weather</button>
             </div>
         </div>
     </form>
@@ -21,18 +27,18 @@
     <!-- Weather Information Section -->
     @if (!string.IsNullOrEmpty(Model.Temperature))
     {
-        <div class="card mb-4">
+        <div class="card mt-4">
             <div class="card-body">
-                <h3 class="card-title">Weather Data:</h3>
-                <p><strong>Temperature:</strong> @Model.Temperature</p>
-                <p><strong>Feels Like:</strong> @Model.FeelsLike</p>
-                <p><strong>Description:</strong> @Model.Description</p>
-                <p><strong>Humidity:</strong> @Model.Humidity</p>
-                <p><strong>Wind Speed:</strong> @Model.WindSpeed</p>
-                <p><strong>Visibility:</strong> @Model.Visibility</p>
-                <p><strong>Pressure:</strong> @Model.Pressure</p>
-                <p><strong>Sunrise:</strong> @Model.Sunrise</p>
-                <p><strong>Sunset:</strong> @Model.Sunset</p>
+                <h5 class="card-title">Weather Data:</h5>
+                <p class="card-text"><strong>Temperature:</strong> @Model.Temperature°F</p>
+                <p class="card-text"><strong>Feels Like:</strong> @Model.FeelsLike°F</p>
+                <p class="card-text"><strong>Description:</strong> @Model.Description</p>
+                <p class="card-text"><strong>Humidity:</strong> @Model.Humidity%</p>
+                <p class="card-text"><strong>Wind Speed:</strong> @Model.WindSpeed</p>
+                <p class="card-text"><strong>Visibility:</strong> @Model.Visibility</p>
+                <p class="card-text"><strong>Pressure:</strong> @Model.Pressure</p>
+                <p class="card-text"><strong>Sunrise:</strong> @Model.Sunrise</p>
+                <p class="card-text"><strong>Sunset:</strong> @Model.Sunset</p>
             </div>
         </div>
     }
@@ -40,18 +46,16 @@
     <!-- Recent Search History -->
     @if (Model.RecentSearches != null && Model.RecentSearches.Any())
     {
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Recent Searches:</h4>
-                <ul class="list-group">
-                    @foreach (var search in Model.RecentSearches)
-                    {
-                        <li class="list-group-item">
-                            @search.CityName - @search.SearchDate.ToString("g")
-                        </li>
-                    }
-                </ul>
-            </div>
+        <div class="mt-4">
+            <h5>Recent Searches:</h5>
+            <ul class="list-group">
+                @foreach (var search in Model.RecentSearches)
+                {
+                    <li class="list-group-item">
+                        @search.CityName - @search.SearchDate.ToString("g")
+                    </li>
+                }
+            </ul>
         </div>
     }
 </div>

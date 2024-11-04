@@ -7,6 +7,8 @@ A robust ASP.NET Core web application that fetches and displays weather informat
 - **Logging**: Integrated logging to track API requests, responses, and any errors encountered during the data fetch process.
 - **Responsive UI**: Modern, user-friendly interface styled with Bootstrap for a polished and accessible user experience.
 - **Unit Testing**: Includes unit tests for core functionality to ensure the application works as expected.
+- **Search History**: Automatically saves the last five cities searched for easy access to previously viewed weather information.
+- **Data Persistence**: Search history is stored in an SQLite database to provide a seamless experience.
 
 ## Setup Instructions
 1. **Clone the Repository**: 
@@ -19,11 +21,14 @@ A robust ASP.NET Core web application that fetches and displays weather informat
 4. **Restore Dependencies**:
    ```bash
    dotnet restore
-5. **Run the Project**:
+5. **Apply Migrations**:
+    ```bash
+    dotnet ef database update
+6. **Run the Project**:
    ```bash
    dotnet run
 
-   ## Database Setup
+## Database Setup
 This project uses SQLite for database interaction. Follow these steps to set up the database:
 
 1. **Install Dependencies**:
@@ -33,7 +38,8 @@ This project uses SQLite for database interaction. Follow these steps to set up 
 
 ## How to Use
 - **Enter a City**: Type in a city name and click "Get Weather" to fetch and display the weather information.
-- **Error Messages**: If the city name is invalid or data cannot be fetched, a user-friendly error message will be displayed. 
+- **View Weather Information**: The app displays temperature, feels-like temperature, weather description, humidity, wind speed, visibility, pressure, and sunrise/sunset times.
+- **Recent Searches**: See the most recent five city searches displayed for quick access. 
 
 ## Testing
 - **Run Unit Tests**:
@@ -42,16 +48,20 @@ This project uses SQLite for database interaction. Follow these steps to set up 
  - Unit tests are provided to verify the functionality of the WeatherService and ensure reliable performance
 
 ## Technologies Used
-- **ASP.NET Core**: Backend framework for building the web application.
-- **HttpClient**: For making API requests to OpenWeatherMap.
-- **Newtonsoft.Json**: Parsing JSON data from the API response.
-- **Bootstrap**: Styling the user interface.
-- **xUnit**: Testing framework for unit tests.
+- **ASP.NET Core**: Framework for building the web application.
+- **Entity Framework Core**: For database interactions and managing search history.
+- **SQLite**: Lightweight database used for storing search history.
+- **Bootstrap**: Frontend framework for styling and layout.
+OpenWeatherMap API: Used for fetching real-time weather data.
 
 ## Logging and Debugging
 - **Logs**: The application uses built-in logging to output information about API requests and error handling. Logs are helpful for debugging and monitoring the app's performance.
 
 ## Future Improvements
-- **Data Persistence**: Save search history or favorite cities for future reference.
+- **Additional Features**: Add weather forecast for multiple days or integrate more advanced visual components.
 - **Enhanced Error Messages**: Provide more specific feedback based on the type of error encountered.
 - **Deployment**: Consider deploying the app to Azure or another cloud service for wider accessibility.
+
+## Data Privacy
+- **Weather Search Data**: We store the names of cities and timestamps of your searches for a better user experience. This information is stored locally and is not shared with third parties.
+- **API Usage**: The app uses the OpenWeatherMap API, and data privacy terms are governed by OpenWeatherMap.
