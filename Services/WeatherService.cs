@@ -15,12 +15,17 @@ namespace WeatherApp.Services
         }
 
         public async Task<JObject> GetWeatherAsync(string city)
-        {
-            var response = await _httpClient.GetAsync($"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={_apiKey}&units=imperial");
-            response.EnsureSuccessStatusCode();
-
-            var content = await response.Content.ReadAsStringAsync();
-            return JObject.Parse(content);
-        }
+{
+    try
+    {
+        var response = await _httpClient.GetAsync($"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={_apiKey}&units=imperial");
+        response.EnsureSuccessStatusCode();
+        var content = await response.Content.ReadAsStringAsync();
+        return JObject.Parse(content);
     }
+    catch (HttpRequestException ex)
+    {
+               throw new Exception("Failed to fetch weather data. Please try again later.", ex);
+    }
+}
 }
