@@ -7,6 +7,10 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddHttpClient<WeatherService>();
 
+builder.Logging.ClearProviders();
+
+builder.Logging.AddConsole();
+
 var app = builder.Build();
 
 
