@@ -15,11 +15,12 @@ A robust ASP.NET Core web application that fetches and displays weather informat
 2. **Open the Project**:
    Launch the project in Visual Studio Code.
 3. **Configure API Key**:
-   Open WeatherService.cs and replace "your-api-key" with your OpenWeatherMap API key by creating an account on [OpenWeatherMap] (https://openweathermap.org/).
+   Open [WeatherService.cs] and replace ["your-api-key"] with your OpenWeatherMap API key by creating an account on [OpenWeatherMap] (https://openweathermap.org/).
 4. **Restore Dependencies**:
    ```bash
    dotnet restore
 5. **Run the Project**:
+   ```bash
    dotnet run
 
 ## How to Use
@@ -28,6 +29,7 @@ A robust ASP.NET Core web application that fetches and displays weather informat
 
 ## Testing
 - **Run Unit Tests**:
+  ```bash
   dotnet test
  - Unit tests are provided to verify the functionality of the WeatherService and ensure reliable performance
 
