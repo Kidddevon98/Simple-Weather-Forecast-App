@@ -23,6 +23,14 @@ A robust ASP.NET Core web application that fetches and displays weather informat
    ```bash
    dotnet run
 
+   ## Database Setup
+This project uses SQLite for database interaction. Follow these steps to set up the database:
+
+1. **Install Dependencies**:
+   ```bash
+   dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+
+
 ## How to Use
 - **Enter a City**: Type in a city name and click "Get Weather" to fetch and display the weather information.
 - **Error Messages**: If the city name is invalid or data cannot be fetched, a user-friendly error message will be displayed. 
