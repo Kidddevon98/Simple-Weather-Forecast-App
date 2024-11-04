@@ -4,19 +4,108 @@
     ViewData["Title"] = "Home page";
 }
 
+<style>
+    /* Full-screen gradient background */
+    body {
+        background: linear-gradient(to right, #6dd5fa, #2980b9);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+    }
+
+    .container {
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        width: 100%;
+        padding: 30px;
+        margin: 20px;
+    }
+
+    .title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .form-inline {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #2980b9;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #1f5f8b;
+    }
+
+    .weather-result {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        font-size: 1.1rem;
+    }
+
+    .weather-data p {
+        margin: 5px 0;
+        font-weight: 500;
+    }
+</style>
+
 <div class="container mt-5">
     <h1 class="text-center mb-4">Weather Forecast</h1>
-    <form method="post" asp-page-handler="Search" class="form-inline justify-content-center">
+    <form method="post" asp-page-handler="Search" class="form-inline justify-content-center" onsubmit="showSpinner()">
         <input type="text" name="city" class="form-control mr-2" placeholder="Enter city name" required />
         <button type="submit" class="btn btn-primary">Get Weather</button>
     </form>
 
-    @if (!string.IsNullOrEmpty(Model.WeatherData))
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="spinner-border text-primary mt-3" role="status" style="display: none;">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Temperature))
     {
         <div id="weatherResult" class="mt-4 p-3 bg-light border rounded">
             <h3>Weather Data:</h3>
-            <pre>@Model.WeatherData</pre>
+            <p><strong>Temperature:</strong> @Model.Temperature°F</p>
+            <p><strong>Feels Like:</strong> @Model.FeelsLike°F</p>
+            <p><strong>Description:</strong> @Model.Description</p>
+            <p><strong>Humidity:</strong> @Model.Humidity%</p>
         </div>
     }
 </div>
+
+<script>
+    // Function to show the loading spinner
+    function showSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'block';
+    }
+</script>
 

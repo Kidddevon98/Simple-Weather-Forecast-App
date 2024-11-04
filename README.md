@@ -15,8 +15,9 @@ A robust ASP.NET Core web application that fetches and displays weather informat
 2. **Open the Project**:
    Launch the project in Visual Studio Code.
 3. **Configure API Key**:
-   Open WeatherService.cs and replace "your-api-key" with your OpenWeatherMap API key.
+   Open WeatherService.cs and replace "your-api-key" with your OpenWeatherMap API key by creating an account on [OpenWeatherMap] (https://openweathermap.org/).
 4. **Restore Dependencies**:
+   ```bash
    dotnet restore
 5. **Run the Project**:
    dotnet run
@@ -28,7 +29,7 @@ A robust ASP.NET Core web application that fetches and displays weather informat
 ## Testing
 - **Run Unit Tests**:
   dotnet test
-  Unit tests are provided to verify the functionality of the WeatherService and ensure reliable performance
+ - Unit tests are provided to verify the functionality of the WeatherService and ensure reliable performance
 
 ## Technologies Used
 - **ASP.NET Core**: Backend framework for building the web application.
@@ -38,7 +39,7 @@ A robust ASP.NET Core web application that fetches and displays weather informat
 - **xUnit**: Testing framework for unit tests.
 
 ## Logging and Debugging
--**Logs**:The application uses built-in logging to output information about API requests and error handling. Logs are helpful for debugging and monitoring the app's performance.
+- **Logs**: The application uses built-in logging to output information about API requests and error handling. Logs are helpful for debugging and monitoring the app's performance.
 
 ## Future Improvements
 - **Data Persistence**: Save search history or favorite cities for future reference.

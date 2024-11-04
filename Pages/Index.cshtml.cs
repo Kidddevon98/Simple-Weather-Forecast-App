@@ -4,35 +4,54 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using WeatherApp.Services;
 
-
-namespace WeatherApp.Pages;
-
-public class IndexModel : PageModel
+namespace WeatherApp.Pages
 {
-    private readonly WeatherService _weatherService;
-
-    public IndexModel(WeatherService weatherService)
+    public class IndexModel : PageModel
     {
-        _weatherService = weatherService;
-    }
+        private readonly WeatherService _weatherService;
 
-    public string WeatherData { get; set; } = string.Empty;
+        public IndexModel(WeatherService weatherService)
+        {
+            _weatherService = weatherService;
+        }
 
-    public async Task OnPostSearchAsync(string city)
-    {
-        var weather = await _weatherService.GetWeatherAsync(city);
+        // Properties to store the weather data
+        public string? Temperature { get; set; }
+        public string? FeelsLike { get; set; }
+        public string? Description { get; set; }
+        public string? Humidity { get; set; }
 
-    // Extract specific details from the JSON
-    var temperature = weather["main"]["temp"];
-    var feelsLike = weather["main"]["feels_like"];
-    var description = weather["weather"][0]["description"];
-    var humidity = weather["main"]["humidity"];
+        public async Task OnPostSearchAsync(string city)
+        {
+            try
+            {
+                var weatherData = await _weatherService.GetWeatherAsync(city);
 
-    // Format the weather data as a string
-    WeatherData = $"Temperature: {temperature}°F\n" +
-                  $"Feels Like: {feelsLike}°F\n" +
-                  $"Description: {description}\n" +
-                  $"Humidity: {humidity}%";
+                if (weatherData?["main"] != null && weatherData["weather"] != null)
+                {
+                    // Parse and assign the weather data with additional null checks
+                    Temperature = weatherData["main"]?["temp"]?.ToString() ?? "N/A";
+                    FeelsLike = weatherData["main"]?["feels_like"]?.ToString() ?? "N/A";
+                    Description = weatherData["weather"]?[0]?["description"]?.ToString() ?? "N/A";
+                    Humidity = weatherData["main"]?["humidity"]?.ToString() ?? "N/A";
+                }
+                else
+                {
+                    // Fallback values if data is not available
+                    Temperature = "N/A";
+                    FeelsLike = "N/A";
+                    Description = "N/A";
+                    Humidity = "N/A";
+                }
+            }
+            catch
+            {
+                // Handle errors, if any
+                Temperature = "N/A";
+                FeelsLike = "N/A";
+                Description = "N/A";
+                Humidity = "N/A";
+            }
+        }
     }
 }
-
