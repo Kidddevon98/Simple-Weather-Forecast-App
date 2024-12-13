@@ -2,17 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "WeatherApp.csproj",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "./output"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "src": "Dockerfile",
+      "use": "@vercel/docker"
     }
   ]
 }
