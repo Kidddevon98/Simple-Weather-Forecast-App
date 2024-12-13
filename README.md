@@ -41,6 +41,11 @@ This project uses SQLite for database interaction. Follow these steps to set up 
 - **View Weather Information**: The app displays temperature, feels-like temperature, weather description, humidity, wind speed, visibility, pressure, and sunrise/sunset times.
 - **Recent Searches**: See the most recent five city searches displayed for quick access. 
 
+## Application Screenshot
+Below is a screenshot of the application in action:
+
+![WeatherApp Running](screenshots/app-running.png)
+
 ## Testing
 - **Run Unit Tests**:
   ```bash
