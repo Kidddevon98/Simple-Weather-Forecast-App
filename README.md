@@ -28,6 +28,11 @@ A robust ASP.NET Core web application that fetches and displays weather informat
    ```bash
    dotnet run
 
+## Troubleshooting
+- Ensure you have .NET 8.0 installed.
+- Verify your API key is correctly configured in `WeatherService.cs`.
+- Run `dotnet ef database update` if you encounter database errors.
+
 ## Database Setup
 This project uses SQLite for database interaction. Follow these steps to set up the database:
 
