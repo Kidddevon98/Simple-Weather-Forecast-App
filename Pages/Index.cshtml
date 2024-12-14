@@ -15,9 +15,15 @@
         <p class="lead">Get detailed and real-time weather updates for your city.</p>
     </div>
 
+    <!-- Search Form -->
     <form method="post" asp-page-handler="Search" class="form-inline justify-content-center mb-4">
         <div class="input-group">
             <input type="text" name="city" class="form-control" placeholder="Enter city name" required />
+            <input type="text" name="state" class="form-control ml-2" placeholder="Enter state code (e.g., KY)" required />
+            <select name="unit" class="form-control ml-2">
+                <option value="imperial" selected>Fahrenheit (°F)</option>
+                <option value="metric">Celsius (°C)</option>
+            </select>
             <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">Get Weather</button>
             </div>
@@ -30,8 +36,8 @@
         <div class="card mt-4">
             <div class="card-body">
                 <h5 class="card-title">Weather Data:</h5>
-                <p class="card-text"><strong>Temperature:</strong> @Model.Temperature°F</p>
-                <p class="card-text"><strong>Feels Like:</strong> @Model.FeelsLike°F</p>
+                <p class="card-text"><strong>Temperature:</strong> @Model.Temperature</p>
+                <p class="card-text"><strong>Feels Like:</strong> @Model.FeelsLike</p>
                 <p class="card-text"><strong>Description:</strong> @Model.Description</p>
                 <p class="card-text"><strong>Humidity:</strong> @Model.Humidity%</p>
                 <p class="card-text"><strong>Wind Speed:</strong> @Model.WindSpeed</p>

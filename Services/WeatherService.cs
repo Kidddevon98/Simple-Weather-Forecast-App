@@ -24,28 +24,30 @@ namespace WeatherApp.Services
         }
 
         /// <summary>
-        /// Fetches weather data for a specific city from the OpenWeatherMap API.
+        /// Fetches weather data for a specific city and state from the OpenWeatherMap API.
         /// </summary>
         /// <param name="city">The city for which to fetch weather data.</param>
+        /// <param name="state">The state code (e.g., KY for Kentucky).</param>
+        /// <param name="unit">The unit system for temperature (imperial for Fahrenheit, metric for Celsius).</param>
         /// <returns>WeatherData object containing weather information for the city.</returns>
-        /// <exception cref="Exception">Thrown when the city is not found, data is invalid, or other errors occur.</exception>
-        public async Task<WeatherData> GetWeatherAsync(string city)
+        /// <exception cref="Exception">Thrown when the city or state is not found, data is invalid, or other errors occur.</exception>
+        public async Task<WeatherData> GetWeatherAsync(string city, string state, string unit = "imperial")
         {
             // API key for OpenWeatherMap (replace with a secure configuration in production).
             string apiKey = "eeec0a18c71c6b5670b043cc5fcf2f25";
 
-            // API endpoint for fetching weather data.
-            string apiUrl = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=imperial";
+            // API endpoint for fetching weather data with the specified city, state, and unit system.
+            string apiUrl = $"https://api.openweathermap.org/data/2.5/weather?q={city},{state},US&appid={apiKey}&units={unit}";
 
             try
             {
                 // Sends a GET request to the API endpoint.
                 var response = await _httpClient.GetAsync(apiUrl);
 
-                // Checks if the response indicates the city was not found.
+                // Checks if the response indicates the city or state was not found.
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    throw new Exception($"City '{city}' not found. Please check the spelling and try again.");
+                    throw new Exception($"Location '{city}, {state}' not found. Please check the spelling and try again.");
                 }
 
                 // Ensures the response status code indicates success.

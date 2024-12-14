@@ -2,7 +2,7 @@
 A robust ASP.NET Core web application that fetches and displays weather information using the OpenWeatherMap API. This project demonstrates API integration, error handling, logging, and a responsive user interface.
 
 ## Features
-- **Fetch Current Weather Data**: Enter a city name to retrieve real-time weather information, including temperature, humidity, and weather conditions.
+- **Fetch Current Weather Data**: Enter a city name and state to retrieve real-time weather information, including temperature, humidity, and weather conditions.
 - **Error Handling**: Comprehensive error handling to manage invalid city names, network issues, and unexpected API responses.
 - **Logging**: Integrated logging to track API requests, responses, and any errors encountered during the data fetch process.
 - **Responsive UI**: Modern, user-friendly interface styled with Bootstrap for a polished and accessible user experience on desktop and mobile devices.
@@ -83,7 +83,7 @@ This project uses SQLite for database interaction. Follow these steps to set up 
     dotnet ef database update
 
 ## How to Use
-- **Enter a City**: Type in a city name and click "Get Weather" to fetch and display the weather information.
+- **Enter a City and State**: Type in a city name and state code (e.g., Lexington,KY) and select yourferred temperature unit (Fahrenheit or Clesius). Click "Get Weather" to fetch and display the weather information.
 - **View Weather Information**: The app displays temperature, feels-like temperature, weather description, humidity, wind speed, visibility, pressure, and sunrise/sunset times.
 - **Recent Searches**: See the most recent five city searches displayed for quick access. 
 

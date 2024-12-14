@@ -13,7 +13,7 @@ namespace WeatherApp.Services.Data
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the city searched by the user.
+        /// Gets or sets the name of the city and state searched by the user.
         /// Nullable to handle cases where the city name might not be provided.
         /// </summary>
         public string? CityName { get; set; } // Nullable
