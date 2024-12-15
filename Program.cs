@@ -1,32 +1,48 @@
 using Microsoft.EntityFrameworkCore;
-using WeatherApp.Services;
-using WeatherApp.Services.Data; // This is correct for accessing WeatherAppDbContext
+using WeatherApp.Services; // Your Logger class
+using WeatherApp.Services.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure services
-builder.Services.AddRazorPages(); // Adds Razor Pages services to the app for server-side rendering.
-builder.Services.AddHttpClient<WeatherService>(); // Registers the WeatherService with dependency injection using HttpClient.
-
-// Configure the database connection
+// Add services to the container
+builder.Services.AddRazorPages();
+builder.Services.AddHttpClient<WeatherService>();
 builder.Services.AddDbContext<WeatherAppDbContext>(options =>
-    options.UseSqlite("Data Source=weatherapp.db")); // Sets up SQLite as the database provider with a specified connection string.
+    options.UseSqlite("Data Source=weatherapp.db"));
 
-builder.Logging.ClearProviders(); // Clears default logging providers to set up custom logging.
-builder.Logging.AddConsole(); // Adds console logging to output logs during application runtime.
+// Configure logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
-var app = builder.Build(); // Builds the application pipeline.
+var app = builder.Build();
 
 // Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error"); // Specifies a custom error handler page for non-development environments.
-    app.UseHsts(); // Enables HTTP Strict Transport Security (HSTS) for added security.
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
 
-app.UseHttpsRedirection(); // Redirects HTTP requests to HTTPS.
-app.UseStaticFiles(); // Serves static files like CSS, JavaScript, and images.
-app.UseRouting(); // Enables routing for incoming requests.
-app.UseAuthorization(); // Adds authorization middleware (even if no authorization is used yet).
-app.MapRazorPages(); // Maps Razor Pages to endpoints in the request pipeline.
-app.Run(); // Runs the application.
+// Global Exception Handling Middleware
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        // Log the error to file
+        WeatherApp.Services.Logger.LogError("A global error occurred", ex);
+
+        // Redirect to the error page
+        context.Response.Redirect("/Error");
+    }
+});
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+app.MapRazorPages();
+app.Run();

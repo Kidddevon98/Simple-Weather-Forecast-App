@@ -27,15 +27,15 @@ namespace WeatherApp.Pages
         }
 
         // Properties to hold weather information
-        public string Temperature { get; set; } = "N/A"; // Current temperature
-        public string FeelsLike { get; set; } = "N/A"; // Feels-like temperature
-        public string Description { get; set; } = "N/A"; // Weather description
-        public string Humidity { get; set; } = "N/A"; // Humidity level
-        public string WindSpeed { get; set; } = "N/A"; // Wind speed
-        public string Visibility { get; set; } = "N/A"; // Visibility distance
-        public string Pressure { get; set; } = "N/A"; // Atmospheric pressure
-        public string Sunrise { get; set; } = "N/A"; // Sunrise time
-        public string Sunset { get; set; } = "N/A"; // Sunset time
+        public string Temperature { get; set; } = "N/A";
+        public string FeelsLike { get; set; } = "N/A";
+        public string Description { get; set; } = "N/A";
+        public string Humidity { get; set; } = "N/A";
+        public string WindSpeed { get; set; } = "N/A";
+        public string Visibility { get; set; } = "N/A";
+        public string Pressure { get; set; } = "N/A";
+        public string Sunrise { get; set; } = "N/A";
+        public string Sunset { get; set; } = "N/A";
 
         /// <summary>
         /// A list to store the recent search history for display on the page.
@@ -50,38 +50,54 @@ namespace WeatherApp.Pages
         /// <param name="unit">Temperature unit ('imperial' for Fahrenheit, 'metric' for Celsius).</param>
         public async Task OnPostSearchAsync(string city, string state, string unit = "imperial")
         {
-            var weatherData = await _weatherService.GetWeatherAsync(city, state, unit); // Fetch weather data with city, state, and unit
-
-            if (weatherData != null)
+            try
             {
-                // Determine the unit symbol
-                string tempUnit = unit == "imperial" ? "°F" : "°C";
+                var weatherData = await _weatherService.GetWeatherAsync(city, state, unit); // Fetch weather data
 
-                // Assign values if data is retrieved successfully
-                Temperature = $"{weatherData.Main.Temp} {tempUnit}";
-                FeelsLike = $"{weatherData.Main.Feels_Like} {tempUnit}";
-                Description = weatherData.Weather[0].Description;
-                Humidity = $"{weatherData.Main.Humidity} %";
-                WindSpeed = $"{weatherData.Wind.Speed} m/s";
-                Visibility = $"{weatherData.Visibility} m";
-                Pressure = $"{weatherData.Main.Pressure} hPa";
-                Sunrise = ConvertUnixTimeToDateTime(weatherData.Sys.Sunrise).ToString("h:mm tt");
-                Sunset = ConvertUnixTimeToDateTime(weatherData.Sys.Sunset).ToString("h:mm tt");
-
-                // Save the search history to the database
-                var searchHistory = new SearchHistory
+                if (weatherData != null)
                 {
-                    CityName = $"{city}, {state}",
-                    SearchDate = DateTime.Now
-                };
-                _context.SearchHistories.Add(searchHistory);
-                await _context.SaveChangesAsync(); // Persist the search history
+                    string tempUnit = unit == "imperial" ? "°F" : "°C";
 
-                // Retrieve the latest five recent searches, sorted by date
-                RecentSearches = _context.SearchHistories
-                                         .OrderByDescending(s => s.SearchDate)
-                                         .Take(5)
-                                         .ToList();
+                    // Assign values if data is retrieved successfully
+                    Temperature = $"{weatherData.Main.Temp} {tempUnit}";
+                    FeelsLike = $"{weatherData.Main.Feels_Like} {tempUnit}";
+                    Description = weatherData.Weather[0].Description;
+                    Humidity = $"{weatherData.Main.Humidity} %";
+                    WindSpeed = $"{weatherData.Wind.Speed} m/s";
+                    Visibility = $"{weatherData.Visibility} m";
+                    Pressure = $"{weatherData.Main.Pressure} hPa";
+                    Sunrise = ConvertUnixTimeToDateTime(weatherData.Sys.Sunrise).ToString("h:mm tt");
+                    Sunset = ConvertUnixTimeToDateTime(weatherData.Sys.Sunset).ToString("h:mm tt");
+
+                    // Save the search history to the database
+                    var searchHistory = new SearchHistory
+                    {
+                        CityName = $"{city}, {state}",
+                        SearchDate = DateTime.Now
+                    };
+                    _context.SearchHistories.Add(searchHistory);
+                    await _context.SaveChangesAsync();
+
+                    // Retrieve the latest five recent searches
+                    RecentSearches = _context.SearchHistories
+                                             .OrderByDescending(s => s.SearchDate)
+                                             .Take(5)
+                                             .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and reset the weather data
+                Logger.LogError("An error occurred", ex);
+                Temperature = "N/A";
+                FeelsLike = "N/A";
+                Description = "Error fetching data. Please try again.";
+                Humidity = "N/A";
+                WindSpeed = "N/A";
+                Visibility = "N/A";
+                Pressure = "N/A";
+                Sunrise = "N/A";
+                Sunset = "N/A";
             }
         }
 
@@ -92,14 +108,9 @@ namespace WeatherApp.Pages
         /// <returns>A DateTime object representing the converted timestamp.</returns>
         private DateTime ConvertUnixTimeToDateTime(long unixTime)
         {
-            // Convert Unix timestamp to UTC DateTime
             var utcDateTime = DateTimeOffset.FromUnixTimeSeconds(unixTime).UtcDateTime;
-
-            // Adjust to local timezone using TimeZoneInfo
-            var localTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"); // Replace with your timezone
-            var localDateTime = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, localTimeZone);
-
-            return localDateTime;
+            var localTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            return TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, localTimeZone);
         }
     }
 }

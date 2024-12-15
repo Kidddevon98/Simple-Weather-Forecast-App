@@ -1,0 +1,3 @@
+2024-12-15 15:25:40 [ERROR] An unexpected error occurred in GetWeatherAsync. Location 'fhdbj, mnvof' not found. Please verify your input.    at WeatherApp.Services.WeatherService.GetWeatherAsync(String city, String state, String unit) in C:\Users\kiddd\WeatherApp\Services\WeatherService.cs:line 43
+2024-12-15 15:25:40 [ERROR] An error occurred Location 'fhdbj, mnvof' not found. Please verify your input.    at WeatherApp.Services.WeatherService.GetWeatherAsync(String city, String state, String unit) in C:\Users\kiddd\WeatherApp\Services\WeatherService.cs:line 43
+   at WeatherApp.Pages.IndexModel.OnPostSearchAsync(String city, String state, String unit) in C:\Users\kiddd\WeatherApp\Pages\Index.cshtml.cs:line 55
